@@ -1,156 +1,533 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Feel Better 💖 | Mental Health Support</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #e0c3fc, #8ec5fc);
-      margin: 0;
-      padding: 20px;
-      color: #333;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindCare - Mental Health Support</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    h1 {
-      text-align: center;
-      color: #4b0082;
-      font-size: 2.8rem;
-      margin-bottom: 10px;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0d1117, #1f2937);
+            position: relative;
+            overflow-x: hidden;
+            color: white;
+        }
 
-    .section {
-      margin: 40px 0;
-    }
+        /* Background decorative elements */
+        .bg-decoration {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
+        .bg-decoration::before,
+        .bg-decoration::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(167, 139, 250, 0.1);
+            filter: blur(60px);
+            animation: float 6s ease-in-out infinite;
+        }
 
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 20px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+        .bg-decoration::before {
+            width: 320px;
+            height: 320px;
+            top: -160px;
+            right: -160px;
+            animation-delay: 0s;
+        }
 
-    .card:hover {
-      transform: scale(1.03);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    }
+        .bg-decoration::after {
+            width: 320px;
+            height: 320px;
+            bottom: -160px;
+            left: -160px;
+            animation-delay: 3s;
+        }
 
-    .card h3 {
-      margin-top: 0;
-      color: #4b0082;
-    }
+        .bg-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 384px;
+            height: 384px;
+            background: rgba(167, 139, 250, 0.05);
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: pulse 4s ease-in-out infinite;
+        }
 
-    .card a {
-      color: #4b0082;
-      text-decoration: none;
-      font-weight: 600;
-    }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
 
-    .quote {
-      text-align: center;
-      font-size: 1.3rem;
-      margin-top: 40px;
-      font-style: italic;
-      color: #444;
-    }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
 
-    iframe {
-      width: 100%;
-      border-radius: 15px;
-    }
+        /* Header */
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 24px;
+            animation: slideDown 0.8s ease-out;
+        }
 
-    .back-btn {
-      display: block;
-      width: max-content;
-      margin: 30px auto;
-      padding: 12px 24px;
-      background: #4b0082;
-      color: white;
-      border: none;
-      border-radius: 30px;
-      text-align: center;
-      font-size: 1rem;
-      text-decoration: none;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      transition: background 0.3s ease;
-    }
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    .back-btn:hover {
-      background: #5d3fd3;
-    }
-  </style>
+        .header-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            color: white;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* Main content */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Page title */
+        .page-title {
+            text-align: center;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            color: white;
+            margin: 48px 0 16px;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .page-subtitle {
+            text-align: center;
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 48px;
+            font-style: italic;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Sections */
+        .section {
+            margin: 64px 0;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        /* Grid layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(31, 41, 55, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border-color: rgba(167, 139, 250, 0.3);
+        }
+
+        .card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .card a {
+            color: #a78bfa;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card a:hover {
+            color: #f472b6;
+        }
+
+        .card a::after {
+            content: '→';
+            transition: transform 0.3s ease;
+        }
+
+        .card a:hover::after {
+            transform: translateX(4px);
+        }
+
+        /* Video iframes */
+        iframe {
+            width: 100%;
+            border-radius: 12px;
+            margin-top: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Final quote */
+        .final-quote {
+            text-align: center;
+            font-size: 24px;
+            margin: 64px 0;
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        /* Back button */
+        .back-btn {
+            display: block;
+            width: max-content;
+            margin: 48px auto;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #a78bfa, #f472b6);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .back-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .back-btn:hover::before {
+            left: 100%;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(167, 139, 250, 0.3);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .page-subtitle {
+                font-size: 18px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .page-subtitle {
+                font-size: 16px;
+            }
+
+            .final-quote {
+                font-size: 20px;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus styles for accessibility */
+        .back-btn:focus,
+        .card a:focus {
+            outline: 2px solid #fde047;
+            outline-offset: 2px;
+        }
+    </style>
 </head>
 <body>
-
-  <h1>💖 You're Not Alone</h1>
-  <p class="quote">“Even the darkest night will end and the sun will rise.” – Victor Hugo</p>
-
-  <!-- Embedded YouTube Videos -->
-  <div class="section">
-    <h2>🎥 Relaxing & Motivational Videos</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>Guided Meditation</h3>
-        <iframe height="200" src="https://www.youtube.com/embed/inpok4MKVLM" allowfullscreen></iframe>
-      </div>
-      <div class="card">
-        <h3>Calm Piano Music</h3>
-        <iframe height="200" src="https://www.youtube.com/embed/MtN1YnoL46Q" allowfullscreen></iframe>
-      </div>
-      <div class="card">
-        <h3>5-Minute Positivity Boost</h3>
-        <iframe height="200" src="https://www.youtube.com/embed/3rxkCOo4N8E" allowfullscreen></iframe>
-      </div>
+    <div class="bg-decoration">
+        <div class="bg-center"></div>
     </div>
-  </div>
 
-  <!-- Blogs -->
-  <div class="section">
-    <h2>📖 Uplifting Blogs</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>10 Ways to Feel Better Right Now</h3>
-        <a href="https://www.psychologytoday.com/us/blog/the-moment-youth/201902/10-ways-feel-better-right-now" target="_blank">Read Blog</a>
-      </div>
-      <div class="card">
-        <h3>Self-Care for Mental Wellness</h3>
-        <a href="https://www.mentalhealth.org.uk/explore-mental-health/blogs/importance-self-care" target="_blank">Read More</a>
-      </div>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <svg class="logo-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                </svg>
+                <span class="logo-text">MindCare</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <div class="container">
+        <h1 class="page-title">
+            💖 You're Not
+            <span class="gradient-text">Alone</span>
+        </h1>
+        
+        <p class="page-subtitle">
+            "Even the darkest night will end and the sun will rise." – Victor Hugo
+        </p>
+
+        <!-- Embedded YouTube Videos -->
+        <div class="section">
+            <h2 class="section-title">🎥 Relaxing & Motivational Videos</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Motivation</h3>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/Tuw8hxrFBH8?si=NIlSm69n628d-oF5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="card">
+                    <h3>Life changing Video</h3>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/hcvmq-hcDIE?si=ZGyp7M6doWLoF9Ve" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="card">
+                    <h3>5-Minute Positivity Boost</h3>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/C5L8Z3qA1DA?si=79ocrUBITfY2S1s-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blogs -->
+        <div class="section">
+            <h2 class="section-title">📖 Uplifting Blogs</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>10 Ways to Feel Better Right Now</h3>
+                    <a href="https://buffer.com/resources/be-happy-today/" target="_blank">Read Blog</a>
+                </div>
+                <div class="card">
+                    <h3>Self-Care for Mental Wellness</h3>
+                    <a href="https://www.mentalhealth.org.uk/explore-mental-health/blogs/importance-self-care" target="_blank">Read More</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Movies -->
+        <div class="section">
+            <h2 class="section-title">🎬 Feel-Good Movies</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Inside Out (2015)</h3>
+                    <a href="https://www.imdb.com/title/tt2096673/" target="_blank">View on IMDb</a>
+                </div>
+                <div class="card">
+                    <h3>The Intern (2015)</h3>
+                    <a href="https://www.imdb.com/title/tt2361509/" target="_blank">View on IMDb</a>
+                </div>
+                <div class="card">
+                    <h3>The Perks of Being a Wallflower (2012)</h3>
+                    <a href="https://www.imdb.com/title/tt1659337/" target="_blank">View on IMDb</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Quote -->
+        <p class="final-quote">💌 Remember: You matter. You are loved. You are enough.</p>
+        
+        <!-- Back Button -->
+        <a href="/home" class="back-btn">← Back to Home</a>
     </div>
-  </div>
 
-  <!-- Movies -->
-  <div class="section">
-    <h2>🎬 Feel-Good Movies</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>Inside Out (2015)</h3>
-        <a href="https://www.imdb.com/title/tt2096673/" target="_blank">IMDb</a>
-      </div>
-      <div class="card">
-        <h3>The Pursuit of Happyness (2006)</h3>
-        <a href="https://www.imdb.com/title/tt0454921/" target="_blank">IMDb</a>
-      </div>
-      <div class="card">
-        <h3>Good Will Hunting (1997)</h3>
-        <a href="https://www.imdb.com/title/tt0119217/" target="_blank">IMDb</a>
-      </div>
-    </div>
-  </div>
+    <script>
+        // Add interactive features
+        document.addEventListener('DOMContentLoaded', () => {
+            // Parallax effect for background elements
+            let ticking = false;
 
-  <!-- Final Quote -->
-  <p class="quote">💌 Remember: You matter. You are loved. You are enough.</p>
-      
-  <!-- Back Button -->
-  <a href="/" class="back-btn">← Back to Dashboard</a>
+            const updateParallax = () => {
+                const scrolled = window.pageYOffset;
+                const parallaxElements = document.querySelectorAll('.bg-decoration');
+                
+                parallaxElements.forEach(el => {
+                    const speed = 0.5;
+                    el.style.transform = `translateY(${scrolled * speed}px)`;
+                });
 
+                ticking = false;
+            };
+
+            const requestTick = () => {
+                if (!ticking) {
+                    requestAnimationFrame(updateParallax);
+                    ticking = true;
+                }
+            };
+
+            window.addEventListener('scroll', requestTick);
+
+            // Intersection Observer for scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe cards for animation
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
 </body>
 </html>

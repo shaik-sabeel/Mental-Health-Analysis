@@ -3,74 +3,529 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Self-Analysis</title>
+    <title>MindCare - Student Self-Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0d1117, #1f2937);
+            position: relative;
+            overflow-x: hidden;
+            color: white;
         }
+
+        /* Background decorative elements */
+        .bg-decoration {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .bg-decoration::before,
+        .bg-decoration::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(167, 139, 250, 0.1);
+            filter: blur(60px);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .bg-decoration::before {
+            width: 320px;
+            height: 320px;
+            top: -160px;
+            right: -160px;
+            animation-delay: 0s;
+        }
+
+        .bg-decoration::after {
+            width: 320px;
+            height: 320px;
+            bottom: -160px;
+            left: -160px;
+            animation-delay: 3s;
+        }
+
+        .bg-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 384px;
+            height: 384px;
+            background: rgba(167, 139, 250, 0.05);
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 24px;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            color: white;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* Main content */
         .container {
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 48px 24px;
         }
-        textarea {
+
+        /* Form container */
+        .form-container {
+            background: rgba(31, 41, 55, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 48px;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .form-subtitle {
+            text-align: center;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 48px;
+            line-height: 1.6;
+        }
+
+        /* Form groups */
+        .form-group {
+            margin-bottom: 32px;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 18px;
+            font-weight: 500;
+            color: white;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .form-textarea {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            min-height: 100px;
+            padding: 16px;
+            background: rgba(17, 24, 39, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
             resize: vertical;
+            transition: all 0.3s ease;
         }
-        button {
-            background: #28a745;
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: #a78bfa;
+            box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.1);
+        }
+
+        .form-textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Submit button */
+        .submit-btn {
+            background: linear-gradient(135deg, #a78bfa, #f472b6);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            border-radius: 5px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            margin-top: 24px;
         }
-        button:hover {
-            background: #218838;
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(167, 139, 250, 0.3);
+        }
+
+        /* Success message */
+        .success-message {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #86efac;
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 24px;
+            text-align: center;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .success-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Back button */
+        .back-btn {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            background: rgba(31, 41, 55, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            z-index: 20;
+        }
+
+        .back-btn:hover {
+            background: rgba(55, 65, 81, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* Progress indicator */
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-bottom: 32px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #a78bfa, #f472b6);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 32px 24px;
+                margin: 0 16px;
+            }
+
+            .form-title {
+                font-size: 28px;
+            }
+
+            .form-subtitle {
+                font-size: 16px;
+            }
+
+            .form-label {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 24px 20px;
+            }
+
+            .back-btn {
+                top: 16px;
+                left: 16px;
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .form-title {
+                font-size: 24px;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus styles for accessibility */
+        .submit-btn:focus,
+        .form-textarea:focus,
+        .back-btn:focus {
+            outline: 2px solid #fde047;
+            outline-offset: 2px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Student Self-Analysis</h2>
-        <form id="studentForm">
-            <label>1. How would you describe yourself in three words?</label>
-            <textarea required></textarea>
-            
-            <label>2. What do you think are your biggest strengths and weaknesses?</label>
-            <textarea required></textarea>
-            
-            <label>3. How do you handle stress or difficult situations?</label>
-            <textarea required></textarea>
-            
-            <label>4. What is the biggest challenge you face in school?</label>
-            <textarea required></textarea>
-            
-            <label>5. How do you usually make new friends?</label>
-            <textarea required></textarea>
-            
-            <label>6. What are your dreams or goals for the future?</label>
-            <textarea required></textarea>
-            
-            <button type="button" onclick="submitForm()">Submit</button>
-        </form>
-        <p id="message"></p>
+    <div class="bg-decoration">
+        <div class="bg-center"></div>
     </div>
-    
+
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <svg class="logo-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                </svg>
+                <span class="logo-text">MindCare</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Back button -->
+    <a href="/home1" class="back-btn">
+        ← Back to Home
+    </a>
+
+    <!-- Main content -->
+    <div class="container">
+        <div class="form-container">
+            <h2 class="form-title">
+                Student
+                <span class="gradient-text">Self-Analysis</span>
+            </h2>
+            
+            <p class="form-subtitle">
+                Take a moment to reflect on yourself. Your honest responses help us provide better support.
+            </p>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <form id="studentForm">
+                <div class="form-group">
+                    <label class="form-label">1. How would you describe yourself in three words?</label>
+                    <textarea class="form-textarea" required placeholder="e.g., creative, determined, friendly"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">2. What do you think are your biggest strengths and weaknesses?</label>
+                    <textarea class="form-textarea" required placeholder="Share your thoughts on what you do well and areas for growth"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">3. How do you handle stress or difficult situations?</label>
+                    <textarea class="form-textarea" required placeholder="Describe your coping mechanisms and strategies"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">4. What is the biggest challenge you face in school?</label>
+                    <textarea class="form-textarea" required placeholder="Tell us about academic, social, or personal challenges"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">5. How do you usually make new friends?</label>
+                    <textarea class="form-textarea" required placeholder="Describe your approach to building relationships"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">6. What are your dreams or goals for the future?</label>
+                    <textarea class="form-textarea" required placeholder="Share your aspirations and what motivates you"></textarea>
+                </div>
+                
+                <button type="button" class="submit-btn" onclick="submitForm()">Submit Analysis</button>
+            </form>
+            
+            <div class="success-message" id="message"></div>
+        </div>
+    </div>
+
     <script>
+        // Add interactive features
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('studentForm');
+            const textareas = document.querySelectorAll('.form-textarea');
+            const progressFill = document.getElementById('progressFill');
+            const submitBtn = document.querySelector('.submit-btn');
+
+            // Update progress bar as user fills form
+            function updateProgress() {
+                const filledFields = Array.from(textareas).filter(textarea => textarea.value.trim() !== '').length;
+                const progress = (filledFields / textareas.length) * 100;
+                progressFill.style.width = progress + '%';
+            }
+
+            textareas.forEach(textarea => {
+                textarea.addEventListener('input', updateProgress);
+            });
+
+            // Form submission animation
+            submitBtn.addEventListener('click', () => {
+                submitBtn.textContent = 'Submitting...';
+                submitBtn.style.opacity = '0.7';
+            });
+
+            // Parallax effect for background elements
+            let ticking = false;
+
+            const updateParallax = () => {
+                const scrolled = window.pageYOffset;
+                const parallaxElements = document.querySelectorAll('.bg-decoration');
+                
+                parallaxElements.forEach(el => {
+                    const speed = 0.5;
+                    el.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+
+                ticking = false;
+            };
+
+            const requestTick = () => {
+                if (!ticking) {
+                    requestAnimationFrame(updateParallax);
+                    ticking = true;
+                }
+            };
+
+            window.addEventListener('scroll', requestTick);
+        });
+
         function submitForm() {
-            document.getElementById("message").innerText = "Thank you for your responses!";
-            document.getElementById("studentForm").reset();
+            const message = document.getElementById("message");
+            const form = document.getElementById("studentForm");
+            
+            // Show success message with animation
+            message.textContent = "Thank you for your responses! Your self-analysis has been submitted successfully.";
+            message.classList.add('show');
+            
+            // Reset form after a delay
+            setTimeout(() => {
+                form.reset();
+                document.getElementById('progressFill').style.width = '0%';
+                message.classList.remove('show');
+            }, 3000);
         }
     </script>
 </body>

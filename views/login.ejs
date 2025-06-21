@@ -3,41 +3,534 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link rel="stylesheet" href="/style_login.css">
+    <title>MindCare - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0d1117, #1f2937);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Background decorative elements */
+        .bg-decoration {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .bg-decoration::before,
+        .bg-decoration::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(167, 139, 250, 0.1);
+            filter: blur(60px);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .bg-decoration::before {
+            width: 320px;
+            height: 320px;
+            top: -160px;
+            right: -160px;
+            animation-delay: 0s;
+        }
+
+        .bg-decoration::after {
+            width: 320px;
+            height: 320px;
+            bottom: -160px;
+            left: -160px;
+            animation-delay: 3s;
+        }
+
+        .bg-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 384px;
+            height: 384px;
+            background: rgba(167, 139, 250, 0.05);
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 24px;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            color: white;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* Main content */
+        .container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 120px);
+            padding: 0 24px;
+        }
+
+        /* Login form */
+        .login-box {
+            background: rgba(31, 41, 55, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 48px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 32px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 16px;
+            background: rgba(17, 24, 39, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #a78bfa;
+            box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.1);
+        }
+
+        .input-group input::placeholder {
+            color: transparent;
+        }
+
+        .input-group label {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 16px;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .input-group input:focus + label,
+        .input-group input:not(:placeholder-shown) + label {
+            top: 0;
+            left: 12px;
+            font-size: 12px;
+            color: #a78bfa;
+            background: rgba(31, 41, 55, 0.9);
+            padding: 0 4px;
+        }
+
+        /* Captcha styles */
+        .captcha-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            align-items: center;
+        }
+
+        .captcha-box {
+            background: rgba(17, 24, 39, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px 16px;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        #captchaText {
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+            letter-spacing: 2px;
+            user-select: none;
+        }
+
+        #captchaInput {
+            flex: 1;
+            padding: 12px 16px;
+            background: rgba(17, 24, 39, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+        }
+
+        #captchaInput:focus {
+            outline: none;
+            border-color: #a78bfa;
+            box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.1);
+        }
+
+        #refreshCaptcha {
+            background: rgba(167, 139, 250, 0.2);
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #refreshCaptcha:hover {
+            background: rgba(167, 139, 250, 0.3);
+            transform: scale(1.05);
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, #a78bfa, #f472b6);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(167, 139, 250, 0.3);
+        }
+
+        .register-link {
+            margin-top: 24px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+        }
+
+        .register-link a {
+            color: #a78bfa;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .register-link a:hover {
+            color: #f472b6;
+        }
+
+        /* Back button */
+        .back-btn {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            background: rgba(31, 41, 55, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            z-index: 20;
+        }
+
+        .back-btn:hover {
+            background: rgba(55, 65, 81, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .login-box {
+                padding: 32px 24px;
+                margin: 0 16px;
+            }
+
+            .login-title {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-box {
+                padding: 24px 20px;
+            }
+
+            .back-btn {
+                top: 16px;
+                left: 16px;
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .captcha-container {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus styles for accessibility */
+        .login-btn:focus,
+        .input-group input:focus,
+        .back-btn:focus,
+        #refreshCaptcha:focus {
+            outline: 2px solid #fde047;
+            outline-offset: 2px;
+        }
+    </style>
 </head>
 <body>
+    <div class="bg-decoration">
+        <div class="bg-center"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <svg class="logo-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                </svg>
+                <span class="logo-text">MindCare</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Back button -->
+    <a href="/home1" class="back-btn">
+        ← Back to Home
+    </a>
+
+    <!-- Main content -->
     <div class="container">
         <div class="login-box">
-            <h2>Login</h2>
+            <h2 class="login-title">
+                Welcome
+                <span class="gradient-text">Back</span>
+            </h2>
+            
             <form id="loginForm" action="/login_submit" method="post">
                 <div class="input-group">
-                    <input type="email" id="email" name="email" required>
+                    <input type="email" id="email" name="email" placeholder=" " required>
                     <label for="email">Email</label>
                 </div>
+                
                 <div class="input-group">
-                    <input type="password" id="password" name="password" required>
+                    <input type="password" id="password" name="password" placeholder=" " required>
                     <label for="password">Password</label>
                 </div>
+                
                 <div class="captcha-container">
                     <div class="captcha-box">
                         <span id="captchaText"><%= captcha %></span>
                     </div>
                     <input type="text" id="captchaInput" name="captcha" placeholder="Enter CAPTCHA" required>
-                    <a href="/login"><button type="button" id="refreshCaptcha">↻</button></a>
+                    <a href="/login" id="refreshCaptcha">↻</a>
                 </div>
+                
                 <button type="submit" class="login-btn">Login</button>
             </form>
+            
+            <p class="register-link">
+                Don't have an account? <a href="/register">Register here</a>
+            </p>
         </div>
     </div>
-    <!-- <script src="/script_login.js"></script> -->
-    <% if(locals.msg){ %>
-        <!-- <script src="/alert.js"></script> -->
-        <script>alert("Email or password incorrect, try again");</script>
+
+    <script>
+        // Add interactive features
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('loginForm');
+            const loginBtn = document.querySelector('.login-btn');
+
+            // Form submission animation
+            form.addEventListener('submit', (e) => {
+                loginBtn.textContent = 'Logging in...';
+                loginBtn.style.opacity = '0.7';
+            });
+
+            // Parallax effect for background elements
+            let ticking = false;
+
+            const updateParallax = () => {
+                const scrolled = window.pageYOffset;
+                const parallaxElements = document.querySelectorAll('.bg-decoration');
+                
+                parallaxElements.forEach(el => {
+                    const speed = 0.5;
+                    el.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+
+                ticking = false;
+            };
+
+            const requestTick = () => {
+                if (!ticking) {
+                    requestAnimationFrame(updateParallax);
+                    ticking = true;
+                }
+            };
+
+            window.addEventListener('scroll', requestTick);
+        });
+
+        // Show alerts for errors
+        <% if(locals.msg){ %>
+            setTimeout(() => {
+                alert("Email or password incorrect, try again");
+            }, 500);
         <% } %>
+        
         <% if(locals.captchaMsg){ %>
-            <!-- <script src="/alert.js"></script> -->
-            <script>alert("Captcha incorrect, try again");</script>
-            <% } %>
+            setTimeout(() => {
+                alert("Captcha incorrect, try again");
+            }, 500);
+        <% } %>
+    </script>
 </body>
 </html>

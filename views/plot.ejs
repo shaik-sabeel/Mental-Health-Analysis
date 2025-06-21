@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MindCare - Your Support Response</title>
+    <title>MindCare - Progress Analytics</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -137,38 +137,19 @@
         .container {
             position: relative;
             z-index: 10;
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 48px 24px;
         }
 
-        /* Response container */
-        .response-container {
-            background: rgba(31, 41, 55, 0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 48px;
-            animation: fadeInUp 1s ease-out 0.3s both;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .response-title {
-            font-size: 32px;
+        /* Page title */
+        .page-title {
+            text-align: center;
+            font-size: clamp(2.5rem, 5vw, 4rem);
             font-weight: 700;
             color: white;
-            margin-bottom: 32px;
-            text-align: center;
+            margin-bottom: 16px;
+            animation: fadeInUp 1s ease-out 0.3s both;
         }
 
         .gradient-text {
@@ -185,76 +166,97 @@
             50% { background-position: 100% 50%; }
         }
 
-        /* Sections */
-        .section {
-            margin-bottom: 32px;
+        .page-subtitle {
+            text-align: center;
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 48px;
+            animation: fadeInUp 1s ease-out 0.4s both;
         }
 
-        .section-title {
-            font-size: 20px;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Plot sections */
+        .plot-section {
+            background: rgba(31, 41, 55, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 32px;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .plot-title {
+            font-size: 24px;
             font-weight: 600;
             color: white;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
+            text-align: center;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            gap: 12px;
         }
 
-        .section-title::before {
-            content: '';
-            width: 4px;
-            height: 20px;
-            background: linear-gradient(135deg, #a78bfa, #f472b6);
-            border-radius: 2px;
+        .plot-icon {
+            width: 24px;
+            height: 24px;
+            color: #a78bfa;
         }
 
-        .section-content {
-            background: rgba(17, 24, 39, 0.5);
+        .plot-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+            background: rgba(17, 24, 39, 0.3);
+            border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 20px;
-            color: rgba(255, 255, 255, 0.9);
-            line-height: 1.6;
-            font-size: 16px;
-        }
-
-        .user-input {
-            background: rgba(59, 130, 246, 0.1);
-            border-color: rgba(59, 130, 246, 0.3);
-        }
-
-        .bot-response {
-            background: rgba(34, 197, 94, 0.1);
-            border-color: rgba(34, 197, 94, 0.3);
-            white-space: pre-wrap;
-            font-family: 'Inter', sans-serif;
-        }
-
-        /* Buttons */
-        .button-group {
-            display: flex;
-            gap: 16px;
-            margin-top: 32px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            position: relative;
             overflow: hidden;
         }
 
-        .btn::before {
+        .plot-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .plot-image:hover {
+            transform: scale(1.02);
+        }
+
+        /* Back button */
+        .back-btn {
+            display: block;
+            width: max-content;
+            margin: 48px auto 0;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #a78bfa, #f472b6);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .back-btn::before {
             content: '';
             position: absolute;
             top: 0;
@@ -265,84 +267,83 @@
             transition: left 0.5s;
         }
 
-        .btn:hover::before {
+        .back-btn:hover::before {
             left: 100%;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #a78bfa, #f472b6);
-            color: white;
-        }
-
-        .btn-secondary {
-            background: rgba(31, 41, 55, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-
-        .btn:hover {
+        .back-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(167, 139, 250, 0.3);
         }
 
-        /* Back button */
-        .back-btn {
-            position: absolute;
-            top: 24px;
-            left: 24px;
-            background: rgba(31, 41, 55, 0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 12px 16px;
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            z-index: 20;
+        /* Loading state */
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            color: rgba(255, 255, 255, 0.8);
         }
 
-        .back-btn:hover {
-            background: rgba(55, 65, 81, 0.6);
-            transform: translateY(-2px);
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #a78bfa;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Responsive design */
         @media (max-width: 768px) {
-            .response-container {
-                padding: 32px 24px;
-                margin: 0 16px;
+            .plot-section {
+                padding: 24px;
+                margin: 0 16px 24px;
             }
 
-            .response-title {
-                font-size: 28px;
+            .page-title {
+                font-size: 2.5rem;
             }
 
-            .button-group {
-                flex-direction: column;
+            .page-subtitle {
+                font-size: 18px;
             }
 
-            .btn {
-                width: 100%;
-                justify-content: center;
+            .plot-title {
+                font-size: 20px;
+            }
+
+            .plot-container {
+                min-height: 300px;
             }
         }
 
         @media (max-width: 480px) {
-            .response-container {
-                padding: 24px 20px;
+            .container {
+                padding: 0 16px;
             }
 
-            .back-btn {
-                top: 16px;
-                left: 16px;
-                padding: 8px 12px;
-                font-size: 12px;
+            .plot-section {
+                padding: 20px;
             }
 
-            .response-title {
-                font-size: 24px;
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .page-subtitle {
+                font-size: 16px;
+            }
+
+            .plot-container {
+                min-height: 250px;
             }
         }
 
@@ -358,7 +359,6 @@
         }
 
         /* Focus styles for accessibility */
-        .btn:focus,
         .back-btn:focus {
             outline: 2px solid #fde047;
             outline-offset: 2px;
@@ -382,48 +382,45 @@
         </div>
     </header>
 
-    <!-- Back button -->
-    <a href="/home1" class="back-btn">
-        ← Back to Home
-    </a>
-
     <!-- Main content -->
     <div class="container">
-        <div class="response-container">
-            <h2 class="response-title">
-                Your
-                <span class="gradient-text">Support Response</span>
+        <h1 class="page-title">
+            Progress
+            <span class="gradient-text">Analytics</span>
+        </h1>
+        
+        <p class="page-subtitle">
+            Track your mental health journey with detailed insights and visualizations
+        </p>
+
+        <!-- Line Plot -->
+        <div class="plot-section">
+            <h2 class="plot-title">
+                <svg class="plot-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+                </svg>
+                Mental Health Trends
             </h2>
-
-            <div class="section">
-                <h3 class="section-title">You said:</h3>
-                <div class="section-content user-input">
-                    <%= input %>
-                </div>
-            </div>
-
-            <div class="section">
-                <h3 class="section-title">Bot Response:</h3>
-                <div class="section-content bot-response">
-                    <%= output %>
-                </div>
-            </div>
-
-            <div class="button-group">
-                <button class="btn btn-primary" onclick="handleClick()">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
-                    </svg>
-                    Listen to Response
-                </button>
-                <a href="/chatbot" class="btn btn-secondary">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                    </svg>
-                    Talk Again
-                </a>
+            <div class="plot-container">
+                <img src="/static/plot.png" alt="Mental Health Trends" class="plot-image" onload="this.style.opacity='1'" onerror="this.parentElement.innerHTML='<div class=\'loading\'><div class=\'loading-spinner\'></div><p>Chart not available</p></div>'">
             </div>
         </div>
+
+        <!-- Bar Plot -->
+        <div class="plot-section">
+            <h2 class="plot-title">
+                <svg class="plot-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+                Mental Health Distribution
+            </h2>
+            <div class="plot-container">
+                <img src="/static/barplot.png" alt="Mental Health Distribution" class="plot-image" onload="this.style.opacity='1'" onerror="this.parentElement.innerHTML='<div class=\'loading\'><div class=\'loading-spinner\'></div><p>Chart not available</p></div>'">
+            </div>
+        </div>
+
+        <!-- Back Button -->
+        <a href="/home" class="back-btn">← Back to Home</a>
     </div>
 
     <script>
@@ -452,23 +449,18 @@
             };
 
             window.addEventListener('scroll', requestTick);
-        });
 
-        function handleClick() {
-            var output = '<%= output %>';
-            const utterance = new SpeechSynthesisUtterance(output);
-            utterance.rate = 0.9;
-            utterance.pitch = 1;
-            utterance.volume = 0.8;
-            speechSynthesis.speak(utterance);
-            
-            // Add visual feedback
-            const btn = event.target.closest('.btn');
-            btn.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                btn.style.transform = 'scale(1)';
-            }, 150);
-        }
+            // Add loading states for images
+            const images = document.querySelectorAll('.plot-image');
+            images.forEach(img => {
+                img.style.opacity = '0';
+                img.style.transition = 'opacity 0.5s ease';
+                
+                img.addEventListener('load', () => {
+                    img.style.opacity = '1';
+                });
+            });
+        });
     </script>
 </body>
 </html>

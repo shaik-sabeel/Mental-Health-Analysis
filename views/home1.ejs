@@ -3,69 +3,907 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mental Health Services</title>
+    <title>MindCare - Mental Health Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0d1117, #1f2937);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Background decorative elements */
+        .bg-decoration {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .bg-decoration::before,
+        .bg-decoration::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(167, 139, 250, 0.1);
+            filter: blur(60px);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .bg-decoration::before {
+            width: 320px;
+            height: 320px;
+            top: -160px;
+            right: -160px;
+            animation-delay: 0s;
+        }
+
+        .bg-decoration::after {
+            width: 320px;
+            height: 320px;
+            bottom: -160px;
+            left: -160px;
+            animation-delay: 3s;
+        }
+
+        .bg-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 384px;
+            height: 384px;
+            background: rgba(167, 139, 250, 0.05);
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 24px;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            color: white;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* Main content */
+        main {
+            position: relative;
+            z-index: 10;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            min-height: calc(100vh - 120px);
+            padding: 0 24px;
+        }
+
+        /* Welcome section */
+        .welcome-section {
             text-align: center;
-            color: #fff;
+            margin-bottom: 48px;
+            animation: fadeInUp 1s ease-out 0.3s both;
         }
-        h1 {
-            font-size: 2.5em;
-            font-weight: bold;
-            margin-bottom: 20px;
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        .button-container {
+
+        .welcome-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(31, 41, 55, 0.5);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 16px;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-5px); }
+            60% { transform: translateY(-3px); }
+        }
+
+        .sparkle-icon {
+            width: 20px;
+            height: 20px;
+            color: #fde047;
+            animation: sparkle 1.5s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .main-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            color: white;
+            margin-bottom: 24px;
+            line-height: 1.1;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 512px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+
+        /* Main Navigation Buttons */
+        .main-nav-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 800px;
+            width: 100%;
+            margin-bottom: 48px;
+        }
+
+        .nav-button {
+            background: rgba(31, 41, 55, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .nav-button:nth-child(1) { animation-delay: 0.1s; }
+        .nav-button:nth-child(2) { animation-delay: 0.2s; }
+        .nav-button:nth-child(3) { animation-delay: 0.3s; }
+        .nav-button:nth-child(4) { animation-delay: 0.4s; }
+
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-button:hover::before {
+            left: 100%;
+        }
+
+        .nav-button:hover {
+            background: rgba(55, 65, 81, 0.6);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-button-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 16px;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-button:hover .nav-button-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .nav-button-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .nav-button-description {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+        }
+
+        /* About section */
+        .about-card {
+            background: rgba(31, 41, 55, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 1024px;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out 0.5s forwards;
+        }
+
+        .about-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .about-section h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .about-section p {
+            line-height: 1.6;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            opacity: 0;
+            animation: slideInLeft 0.5s ease-out forwards;
+        }
+
+        .feature-list li:nth-child(1) { animation-delay: 0.6s; }
+        .feature-list li:nth-child(2) { animation-delay: 0.7s; }
+        .feature-list li:nth-child(3) { animation-delay: 0.8s; }
+        .feature-list li:nth-child(4) { animation-delay: 0.9s; }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .list-dot {
+            width: 8px;
+            height: 8px;
+            background: #a78bfa;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 24px;
+            color: rgba(255, 255, 255, 0.6);
+            animation: fadeIn 1s ease-out 1s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0d1117, #1f2937);
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            width: 80%;
-            max-width: 400px;
-        }
-        .option-button {
-            display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            padding: 15px 25px;
-            font-size: 1.2em;
-            font-weight: bold;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            background: #ffffff;
-            color: #333;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
         }
-        .option-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
-        .arrow {
-            font-size: 1.5em;
-            color: #2575fc;
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-overlay p {
+            color: white;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .main-nav-buttons {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .main-title {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 16px;
+            }
+
+            main {
+                padding: 0 16px;
+            }
+
+            .nav-button,
+            .about-card {
+                padding: 24px 20px;
+            }
+
+            .main-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus styles for accessibility */
+        .nav-button:focus,
+        .logo:focus {
+            outline: 2px solid #fde047;
+            outline-offset: 2px;
         }
     </style>
 </head>
 <body>
-    <h1>Welcome <%= name %></h1>
-    <h1>Select Your Option</h1>
-    <div class="button-container">
-        <button class="option-button" onclick="location.href='AI_assistance.html'">
-            Mental Health Support Rule Based AI Assistant <span class="arrow">→</span>
-        </button>
-        <button class="option-button" onclick="location.href='/chatbot'">
-            Mental Health Support LLM Based AI Assistant <span class="arrow">→</span>
-        </button>
-        <button class="option-button" onclick="location.href='indexM.html'">
-            Mental Health Analysis <span class="arrow">→</span>
-        </button>
+    <div class="bg-decoration">
+        <div class="bg-center"></div>
     </div>
+
+    <!-- Header with logo only -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <svg class="logo-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                </svg>
+                <span class="logo-text">MindCare</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main>
+        <!-- Welcome section -->
+        <div class="welcome-section">
+            <div class="welcome-badge">
+                <svg class="sparkle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                </svg>
+                <span id="welcome-text">Welcome back, User</span>
+            </div>
+
+            <h1 class="main-title">
+                Your Mental Health
+                <span class="gradient-text">Journey Starts Here</span>
+            </h1>
+
+            <p class="subtitle">
+                Choose your path to better mental wellness with our comprehensive suite of AI-powered tools and personalized support systems.
+            </p>
+        </div>
+
+        <!-- Main Navigation Buttons -->
+        <div class="main-nav-buttons">
+            <a href="/AI_assistance.html" class="nav-button">
+                <svg class="nav-button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                </svg>
+                <h3 class="nav-button-title">Assistive Chatbot</h3>
+                <p class="nav-button-description">Get immediate support and guidance from our specialized mental health assistant</p>
+            </a>
+
+            <a href="/chatbot" class="nav-button">
+                <svg class="nav-button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                </svg>
+                <h3 class="nav-button-title">LLM Chatbot</h3>
+                <p class="nav-button-description">Advanced AI conversations for deeper insights and personalized mental health support</p>
+            </a>
+
+            <a href="/indexM.html" class="nav-button">
+                <svg class="nav-button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+                <h3 class="nav-button-title">Mental Health Analysis</h3>
+                <p class="nav-button-description">Comprehensive assessment and analysis of your mental wellness patterns</p>
+            </a>
+
+            <a href="/support" class="nav-button">
+                <svg class="nav-button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
+                <h3 class="nav-button-title">Suggestions on Improving Mental-Health</h3>
+                <p class="nav-button-description">Take these suggestions to improve and lighten your mood today</p>
+            </a>
+            <a href="/plot" class="nav-button">
+                <svg class="nav-button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
+                <h3 class="nav-button-title">Progress</h3>
+                <p class="nav-button-description">Track your mental health journey and celebrate your achievements</p>
+            </a>
+        </div>
+
+        <!-- About section -->
+        <div class="about-card">
+            <h2 class="about-title">About MindCare</h2>
+            <div class="about-content">
+                <div class="about-section">
+                    <h3>Our Mission</h3>
+                    <p>
+                        We believe everyone deserves access to quality mental health support. Our platform combines cutting-edge AI technology with evidence-based therapeutic approaches to provide personalized care that fits your lifestyle.
+                    </p>
+                </div>
+                <div class="about-section">
+                    <h3>What We Offer</h3>
+                    <ul class="feature-list">
+                        <li>
+                            <div class="list-dot"></div>
+                            24/7 AI Mental Health Assistant
+                        </li>
+                        <li>
+                            <div class="list-dot"></div>
+                            Comprehensive Mental Health Analysis
+                        </li>
+                        <li>
+                            <div class="list-dot"></div>
+                            Personalized Wellness Plans
+                        </li>
+                        <li>
+                            <div class="list-dot"></div>
+                            Progress Tracking & Insights
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 MindCare. Your mental health matters.</p>
+    </footer>
+
+    <!-- Loading overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <p>Loading your personalized experience...</p>
+    </div>
+
+    <script>
+        // Mental Health Website JavaScript
+        class MindCareApp {
+            constructor() {
+                this.userName = this.getUserName();
+                this.init();
+            }
+
+            init() {
+                this.showLoadingScreen();
+                this.setupEventListeners();
+                this.personalizeContent();
+                this.initAnimations();
+                this.hideLoadingScreen();
+            }
+
+            // Get user name from localStorage or prompt
+            getUserName() {
+                let name = localStorage.getItem('mindcare_username');
+                if (!name) {
+                    name = prompt('Welcome to MindCare! What\'s your name?') || 'User';
+                    localStorage.setItem('mindcare_username', name);
+                }
+                return name;
+            }
+
+            // Show loading screen
+            showLoadingScreen() {
+                const overlay = document.getElementById('loading-overlay');
+                if (overlay) {
+                    overlay.style.display = 'flex';
+                }
+            }
+
+            // Hide loading screen after content loads
+            hideLoadingScreen() {
+                setTimeout(() => {
+                    const overlay = document.getElementById('loading-overlay');
+                    if (overlay) {
+                        overlay.classList.add('hidden');
+                        setTimeout(() => {
+                            overlay.style.display = 'none';
+                        }, 500);
+                    }
+                }, 2000);
+            }
+
+            // Setup event listeners
+            setupEventListeners() {
+                // Logo click - reset user name
+                const logo = document.querySelector('.logo');
+                if (logo) {
+                    logo.addEventListener('click', () => {
+                        this.resetUserName();
+                    });
+                }
+
+                // Navigation button hover effects
+                const navButtons = document.querySelectorAll('.nav-button');
+                navButtons.forEach(btn => {
+                    btn.addEventListener('mouseenter', this.onNavButtonHover);
+                    btn.addEventListener('mouseleave', this.onNavButtonLeave);
+                });
+
+                // Smooth scrolling for internal links
+                document.addEventListener('click', (e) => {
+                    if (e.target.matches('a[href^="#"]')) {
+                        e.preventDefault();
+                        const target = document.querySelector(e.target.getAttribute('href'));
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                });
+
+                // Keyboard navigation
+                document.addEventListener('keydown', this.handleKeyboardNavigation.bind(this));
+
+                // Track user interactions
+                this.trackUserInteractions();
+            }
+
+            // Personalize content with user name
+            personalizeContent() {
+                const welcomeText = document.getElementById('welcome-text');
+                if (welcomeText) {
+                    welcomeText.textContent = `Welcome back, ${this.userName}`;
+                }
+
+                // Add personalized greeting based on time of day
+                const hour = new Date().getHours();
+                let greeting = 'Welcome back';
+                
+                if (hour < 12) {
+                    greeting = 'Good morning';
+                } else if (hour < 17) {
+                    greeting = 'Good afternoon';
+                } else {
+                    greeting = 'Good evening';
+                }
+
+                if (welcomeText) {
+                    welcomeText.textContent = `${greeting}, ${this.userName}`;
+                }
+            }
+
+            // Reset user name
+            resetUserName() {
+                localStorage.removeItem('mindcare_username');
+                const newName = prompt('What would you like to be called?') || 'User';
+                localStorage.setItem('mindcare_username', newName);
+                this.userName = newName;
+                this.personalizeContent();
+            }
+
+            // Navigation button hover effects
+            onNavButtonHover(e) {
+                const icon = e.currentTarget.querySelector('.nav-button-icon');
+                if (icon) {
+                    icon.style.transform = 'scale(1.1) rotate(5deg)';
+                }
+            }
+
+            onNavButtonLeave(e) {
+                const icon = e.currentTarget.querySelector('.nav-button-icon');
+                if (icon) {
+                    icon.style.transform = 'scale(1) rotate(0deg)';
+                }
+            }
+
+            // Initialize animations
+            initAnimations() {
+                // Intersection Observer for scroll animations
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('animate-in');
+                        }
+                    });
+                }, observerOptions);
+
+                // Observe elements for animation
+                const animateElements = document.querySelectorAll('.nav-button, .about-card');
+                animateElements.forEach(el => observer.observe(el));
+
+                // Parallax effect for background elements
+                this.initParallax();
+            }
+
+            // Parallax scrolling effect
+            initParallax() {
+                let ticking = false;
+
+                const updateParallax = () => {
+                    const scrolled = window.pageYOffset;
+                    const parallaxElements = document.querySelectorAll('.bg-decoration');
+                    
+                    parallaxElements.forEach(el => {
+                        const speed = 0.5;
+                        el.style.transform = `translateY(${scrolled * speed}px)`;
+                    });
+
+                    ticking = false;
+                };
+
+                const requestTick = () => {
+                    if (!ticking) {
+                        requestAnimationFrame(updateParallax);
+                        ticking = true;
+                    }
+                };
+
+                window.addEventListener('scroll', requestTick);
+            }
+
+            // Keyboard navigation
+            handleKeyboardNavigation(e) {
+                // ESC key to reset user name
+                if (e.key === 'Escape') {
+                    this.resetUserName();
+                }
+
+                // Enter key on focused buttons
+                if (e.key === 'Enter' && e.target.classList.contains('nav-button')) {
+                    e.target.click();
+                }
+            }
+
+            // Track user interactions for analytics
+            trackUserInteractions() {
+                const interactions = {
+                    pageLoaded: new Date().toISOString(),
+                    userName: this.userName,
+                    userAgent: navigator.userAgent,
+                    screenResolution: `${screen.width}x${screen.height}`,
+                    interactions: []
+                };
+
+                // Track button clicks
+                document.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('nav-button') || e.target.closest('.nav-button')) {
+                        const button = e.target.classList.contains('nav-button') ? e.target : e.target.closest('.nav-button');
+                        interactions.interactions.push({
+                            type: 'navigation_click',
+                            target: button.querySelector('.nav-button-title').textContent.trim(),
+                            timestamp: new Date().toISOString()
+                        });
+                    }
+                });
+
+                // Track time spent on page
+                let startTime = Date.now();
+                window.addEventListener('beforeunload', () => {
+                    interactions.timeSpent = Date.now() - startTime;
+                    // In a real app, you would send this data to your analytics service
+                    console.log('User interactions:', interactions);
+                });
+            }
+
+            // Utility method to show notifications
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `notification notification-${type}`;
+                notification.textContent = message;
+                
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: rgba(255, 255, 255, 0.9);
+                    color: #333;
+                    padding: 16px 24px;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                    z-index: 10000;
+                    transform: translateX(100%);
+                    transition: transform 0.3s ease;
+                `;
+
+                document.body.appendChild(notification);
+
+                // Animate in
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(0)';
+                }, 100);
+
+                // Remove after 3 seconds
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 3000);
+            }
+        }
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            const app = new MindCareApp();
+            
+            // Add some interactive features
+            setTimeout(() => {
+                app.showNotification(`Welcome to MindCare, ${app.userName}! 🌟`, 'success');
+            }, 3000);
+        });
+
+        // Service Worker registration for PWA capabilities
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>

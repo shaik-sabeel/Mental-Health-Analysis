@@ -8,6 +8,9 @@ import { fileURLToPath } from "url";
 import userModel from "./models/userModel.js";
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import dotenv from 'dotenv';
+import { exec } from 'child_process';
+import path from 'path';
+
 
 dotenv.config();
 
@@ -136,7 +139,7 @@ app.get('/logout',(req,res)=>{
 })
 
 
-app.post("/score",(req,res)=>{
+app.post("/score",isLoggedin,async(req,res)=>{
    let {stressLevel,sleepQuality,mood,socialInteraction,academicPressure}=req.body;
    let a = parseInt(stressLevel);
    let b = parseInt(sleepQuality);
@@ -145,6 +148,12 @@ app.post("/score",(req,res)=>{
    let e = parseInt(academicPressure);
    console.log(a+b+c+d+e);
    let averageScore = (a+b+c+d+e)/5;
+
+   let email = req.user.email
+    let userData = await userModel.findOne({email});
+   userData.score.push(averageScore);
+    await userData.save();
+
    if (averageScore >= 4) {
         // window.location.href = '/congratulations';
         res.redirect('/congratulations')
@@ -193,7 +202,43 @@ app.get("/low",(req,res)=>{
 
 app.get("/support",(req,res)=>{
     res.render("support.ejs");
-})
+});
+
+// app.get("/plot",(req,res)=>{
+//     res.render("");
+// });
+
+app.get('/plot',isLoggedin, async(req, res) => {
+//   const x = req.body.x;
+//   const y = req.body.y;
+    let email = req.user.email;
+    let userData = await userModel.findOne({email});
+    let scores = userData.score;
+  // Call Python script
+  exec(`python plot.py "${scores}" `, (err) => {
+    // "${y}"
+    if (err) {
+      console.error(err);
+      return res.send("Error generating plot.");
+    }
+    // res.send(`
+    //   <h2>Generated Plot:</h2>
+    //   <img src="/static/plot.png" alt="Dynamic Plot" />
+    //   <br><a href="/home">Go back</a>
+    // `);
+    res.render('plot.ejs');
+  });
+});
+
+// app.get('/call',(req,res)=>{
+//     exec(`python hello.py`, (err) => {
+//     if (err) {
+//       console.error(err);
+//       return res.send("Error generating plot.");
+//     }
+//     res.send("success")
+//   });
+// })
 
 
 if (!process.env.GEMINI_API_KEY) {
