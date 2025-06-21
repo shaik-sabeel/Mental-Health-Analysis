@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mental Health Chatbot</title>
+  <link rel="stylesheet" href="/styleC.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Mental Health Chatbot</h1>
+    <% if (error) { %>
+      <p style="color: red;"><%= error %></p>
+    <% } %>
+    <form action="/chat" method="POST">
+      <label>How are you feeling today?</label><br/>
+      <textarea name="feeling" rows="5" placeholder="e.g., I'm feeling anxious about exams..." required></textarea><br/>
+      <button type="submit">Get Support</button>
+    </form>
+  </div>
+</body>
+</html>

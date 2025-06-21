@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Support</title>
+  <link rel="stylesheet" href="/styleC.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>You said:</h2>
+    <p><%= input %></p>
+
+    <h2>Bot Response:</h2>
+    <pre><%= output %></pre>
+    <button onclick="handleClick">click here</button>
+    <a href="/chatbot">Talk again</a>
+    <script>
+        function handleClick(){
+            var output = '<%= output %>';
+            speechSynthesis.speak(new SpeechSynthesisUtterance(output))
+        }
+    </script>
+  </div>
+</body>
+</html>

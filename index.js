@@ -6,6 +6,11 @@ import bcrypt from "bcrypt"
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import userModel from "./models/userModel.js";
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 
@@ -185,6 +190,59 @@ app.get("/confidence_exercises",(req,res)=>{
 app.get("/low",(req,res)=>{
     res.sendFile(__dirname+"/Exercises/low_exercises.html");
 });
+
+app.get("/support",(req,res)=>{
+    res.render("support.ejs");
+})
+
+
+if (!process.env.GEMINI_API_KEY) {
+  console.error("Missing Gemini API Key in .env");
+  process.exit(1);
+}
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+app.get('/chatbot', (req, res) => {
+  res.render('index.ejs', { error: null });
+});
+
+app.post('/chat', async (req, res) => {
+  const userInput = req.body.feeling;
+
+  const prompt = `
+You are a kind and empathetic mental health assistant for students.
+
+Student says: "${userInput}"
+
+Your response must:
+1. Start with a positive or calming suggestion (breathing, walk, music, journaling, etc.)
+2. Include a light-hearted, clean joke or fun tip to lift mood (if appropriate)
+3. If the student sounds severely anxious or depressed, recommend talking to a counselor or professional.
+
+Be concise, warm, and non-judgmental.
+`;
+
+  try {
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+ // same approach as resume analyzer
+    const result = await model.generateContent(prompt);
+    const output = await result.response.text();
+
+    if (!output || output.trim().length === 0) {
+      throw new Error("Empty response from Gemini.");
+    }
+
+    res.render('response.ejs', { input: userInput, output});
+  } catch (err) {
+    console.error("Gemini Error:", err.message);
+    res.render('index.ejs', { error: "Sorry, something went wrong. Please try again." });
+  }
+});
+
+
+
+
 
 app.listen(port,()=>{
     console.log(`Listening in port ${port}`);
