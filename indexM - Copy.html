@@ -112,10 +112,10 @@ select:focus {
 <body>
     <div class="container">
         <h1>Student Mental Health Analysis</h1>
-        <form id="mentalHealthForm" action="/score" method="post">
+        <form id="mentalHealthForm">
             <div class="form-group">
                 <label for="stressLevel">How would you rate your current stress level?</label>
-                <select id="stressLevel" name="stressLevel" required>
+                <select id="stressLevel" required>
                     <option value="">Select an option</option>
                     <option value="5">Very Low</option>
                     <option value="4">Low</option>
@@ -127,7 +127,7 @@ select:focus {
 
             <div class="form-group">
                 <label for="sleepQuality">How would you rate your sleep quality?</label>
-                <select id="sleepQuality" name="sleepQuality" required>
+                <select id="sleepQuality" required>
                     <option value="">Select an option</option>
                     <option value="1">Very Poor</option>
                     <option value="2">Poor</option>
@@ -139,7 +139,7 @@ select:focus {
 
             <div class="form-group">
                 <label for="mood">How would you describe your current mood?</label>
-                <select id="mood" name="mood" required>
+                <select id="mood" required>
                     <option value="">Select an option</option>
                     <option value="1">Very Negative</option>
                     <option value="2">Negative</option>
@@ -151,7 +151,7 @@ select:focus {
 
             <div class="form-group">
                 <label for="socialInteraction">How comfortable are you with social interactions?</label>
-                <select id="socialInteraction" name="socialInteraction" required>
+                <select id="socialInteraction" required>
                     <option value="">Select an option</option>
                     <option value="1">Very Uncomfortable</option>
                     <option value="2">Uncomfortable</option>
@@ -163,7 +163,7 @@ select:focus {
 
             <div class="form-group">
                 <label for="academicPressure">How do you feel about your academic workload?</label>
-                <select id="academicPressure" name="academicPressure"required>
+                <select id="academicPressure" required>
                     <option value="">Select an option</option>
                     <option value="1">Overwhelming</option>
                     <option value="2">Heavy</option>
@@ -183,7 +183,7 @@ select:focus {
 
      <script>
         document.getElementById('mentalHealthForm').addEventListener('submit', function(e) {
-    // e.preventDefault();
+    e.preventDefault();
     
     // Get all the selected values
     const stressLevel = parseInt(document.getElementById('stressLevel').value);
