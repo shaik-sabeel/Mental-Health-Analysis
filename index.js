@@ -10,6 +10,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import dotenv from 'dotenv';
 import { exec } from 'child_process';
 import path from 'path';
+const PORT = process.env.PORT || 3000;
 
 
 dotenv.config();
